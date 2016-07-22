@@ -1,4 +1,4 @@
-spark.hello: Scala to Spark Example
+spark.hello: Scala to Spark - Hello World
 ================
 
 This is package to demonstrate how [sparklyr](http://github.com/rstudio/sparklyr) can be used to assist in building an [sparkapi](http://github.com/rstudio/sparkapi) extension package that uses Scala code, which is compiled and deployed to Apache Spark.
@@ -43,4 +43,4 @@ spark_hello(sc)
 spark_disconnect(sc)
 ```
 
-You can learn more about sparklyr at: \[<http://spark.rstudio.com/>\]
+You can learn more about sparklyr from [spark.rstudio.com](http://spark.rstudio.com/)

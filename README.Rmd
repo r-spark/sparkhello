@@ -1,5 +1,5 @@
 ---
-title: "spark.hello: Scala to Spark Example"
+title: "spark.hello: Scala to Spark - Hello World"
 output:
   github_document:
     fig_width: 9
@@ -52,5 +52,5 @@ spark_hello(sc)
 spark_disconnect(sc)
 ```
 
-You can learn more about sparklyr at: [http://spark.rstudio.com/]
+You can learn more about sparklyr from [spark.rstudio.com](http://spark.rstudio.com/)
 
