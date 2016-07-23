@@ -1,5 +1,5 @@
 ---
-title: "spark.hello: Scala to Spark - Hello World"
+title: "sparkhello: Scala to Spark - Hello World"
 output:
   github_document:
     fig_width: 9
@@ -27,7 +27,8 @@ the structure of this sample package. The Scala code is stored under
 the supporting jars under `inst/java`:
 
 ```{r, eval=FALSE}
-sparklyr::spark_compile("SparkHello")
+spark_home <- sparklyr:::spark_install_find("1.6.1")$sparkVersionDir
+sparkapi::spark_compile("SparkHello", spark_home)
 ```
 
 Once the code is compiled as jars, you can make use of it on your own R
@@ -44,7 +45,7 @@ your extension as well:
 
 ```{r}
 library(sparklyr)
-library(spark.hello)
+library(sparkhello)
 
 sc <- spark_connect(master = "local")
 spark_hello(sc)

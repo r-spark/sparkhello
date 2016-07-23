@@ -1,4 +1,4 @@
-spark.hello: Scala to Spark - Hello World
+sparkhello: Scala to Spark - Hello World
 ================
 
 This is package to demonstrate how [sparklyr](http://github.com/rstudio/sparklyr) can be used to assist in building an [sparkapi](http://github.com/rstudio/sparkapi) extension package that uses Scala code, which is compiled and deployed to Apache Spark.
@@ -16,7 +16,8 @@ object HelloWorld {
 Packaging and deploying this Scala code can be accomplished by following the structure of this sample package. The Scala code is stored under `inst/scala` and compiled using the follwoing command which will generate the supporting jars under `inst/java`:
 
 ``` r
-sparklyr::spark_compile("SparkHello")
+spark_home <- sparklyr:::spark_install_find("1.6.1")$sparkVersionDir
+sparkapi::spark_compile("SparkHello", spark_home)
 ```
 
 Once the code is compiled as jars, you can make use of it on your own R functions using `invoke` and `invoke_static`:
@@ -31,7 +32,7 @@ After building this package, others using `sparklyr` will be able to use your ex
 
 ``` r
 library(sparklyr)
-library(spark.hello)
+library(sparkhello)
 
 sc <- spark_connect(master = "local")
 spark_hello(sc)

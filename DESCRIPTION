@@ -1,4 +1,4 @@
-Package: spark.hello
+Package: sparkhello
 Type: Package
 Title: Scala to Spark - Hello World
 Version: 0.0.1
