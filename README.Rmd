@@ -21,13 +21,13 @@ object HelloWorld {
 }
 ```
 
-Packaging and deploying this Scala code can be accomplished by following
+Packaging and deploying this Scala code can be accomplished by reusing
 the structure of this sample package. The Scala code is stored under 
-`inst/scala` and compiled using the follwoing command which will generate
+`inst/scala` and compiled using the following command which will generate
 the supporting jars under `inst/java`:
 
 ```{r, eval=FALSE}
-spark_home <- sparklyr:::spark_install_find("1.6.1")$sparkVersionDir
+spark_home <- sparklyr::spark_install_find("1.6.1")$sparkVersionDir
 sparkapi::spark_compile("SparkHello", spark_home)
 ```
 
