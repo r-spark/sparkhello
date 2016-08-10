@@ -13,18 +13,35 @@ object HelloWorld {
 }
 ```
 
-Packaging and deploying this Scala code can be accomplished by following the structure of this sample package. The Scala code is stored under `inst/scala` and compiled using the follwoing command which will generate the supporting jars under `inst/java`:
+Packaging and deploying this Scala code can be accomplished by reusing the structure of this sample package. The Scala code is stored under `inst/scala` and compiled using the following command which will generate the supporting jars under `inst/java`:
 
 ``` r
-spark_home <- sparklyr:::spark_install_find("1.6.1")$sparkVersionDir
-sparkapi::spark_compile("SparkHello", spark_home)
+sparklyr::spark_install(version = "1.6.2")
 ```
+
+``` r
+sparklyr::spark_compile("SparkHello")
+```
+
+    ## ==> using scalac 2.11.8
+
+    ## ==> building against Spark 1.6.2
+
+    ## ==> building 'SparkHello' ...
+
+    ## ==> '/usr/local/bin/scalac' -optimise '/Users/javierluraschi/RStudio/spark.hello/inst/scala/hello.scala'
+
+    ## ==> '/usr/bin/jar' cf '/Users/javierluraschi/RStudio/spark.hello/inst/java/SparkHello' .
+
+    ## ==> SparkHello successfully created
+
+    ## [1] TRUE
 
 Once the code is compiled as jars, you can make use of it on your own R functions using `invoke` and `invoke_static`:
 
 ``` r
 spark_hello <- function(sc) {
-  sparkapi::invoke_static(sc, "SparkHello.HelloWorld", "hello")
+  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "hello")
 }
 ```
 

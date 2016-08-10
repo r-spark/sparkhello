@@ -27,8 +27,11 @@ the structure of this sample package. The Scala code is stored under
 the supporting jars under `inst/java`:
 
 ```{r, eval=FALSE}
-spark_home <- sparklyr::spark_install_find("1.6.1")$sparkVersionDir
-sparkapi::spark_compile("SparkHello", spark_home)
+sparklyr::spark_install(version = "1.6.2")
+```
+
+```{r}
+sparklyr::spark_compile("SparkHello")
 ```
 
 Once the code is compiled as jars, you can make use of it on your own R
@@ -36,7 +39,7 @@ functions using `invoke` and `invoke_static`:
 
 ```{r, eval=FALSE}
 spark_hello <- function(sc) {
-  sparkapi::invoke_static(sc, "SparkHello.HelloWorld", "hello")
+  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "hello")
 }
 ```
 

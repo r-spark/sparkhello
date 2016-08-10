@@ -1,7 +1,7 @@
 spark_dependencies <- function(spark_version, scala_version, ...) {
-  sparkapi::spark_dependency(
+  sparklyr::spark_dependency(
     jars = c(
-      system.file("java/SparkHello-1.6.1.jar",
+      system.file("java/SparkHello.jar",
                   package = "sparkhello")
     ),
     packages = c(
@@ -9,7 +9,7 @@ spark_dependencies <- function(spark_version, scala_version, ...) {
   )
 }
 
-#' @import sparkapi
+#' @import sparklyr
 .onLoad <- function(libname, pkgname) {
-  sparkapi::register_extension(pkgname)
+  sparklyr::register_extension(pkgname)
 }

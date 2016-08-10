@@ -9,8 +9,8 @@
 #   http://spark.rstudio.com/
 #
 
-#' @import sparkapi
+#' @import sparklyr
 #' @export
 spark_hello <- function(sc) {
-  sparkapi::invoke_static(sc, "SparkHello.HelloWorld", "hello")
+  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "hello")
 }
