@@ -19,7 +19,7 @@ Packaging and deploying this Scala code can be accomplished by reusing the struc
 sparklyr::spark_install(version = "1.6.2")
 ```
 
-To compile scala code into Spark using sparklyr, installing Scala 2.10 and 2.11 is required. Scala can be downloaded from \[<http://www.scala-lang.org/download/>\] and extracted into, for instance, `/usr/local/scala/scala-2.10.6`.
+To compile scala code into Spark using sparklyr, installing Scala 2.10 and 2.11 is required. Scala can be downloaded from [Scala Download](http://www.scala-lang.org/download/) and extracted into, for instance, `/usr/local/scala/scala-2.10.6`.
 
 ``` r
 sparklyr::compile_package_jars()
