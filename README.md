@@ -19,23 +19,35 @@ Packaging and deploying this Scala code can be accomplished by reusing the struc
 sparklyr::spark_install(version = "1.6.2")
 ```
 
+To compile scala code into Spark using sparklyr, installing Scala 2.10 and 2.11 is required. Scala can be downloaded from \[<http://www.scala-lang.org/download/>\] and extracted into, for instance, `/usr/local/scala/scala-2.10.6`.
+
 ``` r
-sparklyr::spark_compile("SparkHello")
+sparklyr::compile_package_jars()
 ```
+
+    ## ==> using scalac 2.10.6
+
+    ## ==> building against Spark 1.6.1
+
+    ## ==> building 'sparkhello-1.6-2.10.jar' ...
+
+    ## ==> '/usr/local/scala/scala-2.10.6/bin/scalac' -optimise '/Users/javierluraschi/RStudio/spark.hello/inst/scala/hello.scala'
+
+    ## ==> '/usr/bin/jar' cf '/Users/javierluraschi/RStudio/spark.hello/inst/java/sparkhello-1.6-2.10.jar' .
+
+    ## ==> sparkhello-1.6-2.10.jar successfully created
 
     ## ==> using scalac 2.11.8
 
-    ## ==> building against Spark 1.6.2
+    ## ==> building against Spark 2.0.0
 
-    ## ==> building 'SparkHello' ...
+    ## ==> building 'sparkhello-2.0-2.11.jar' ...
 
-    ## ==> '/usr/local/bin/scalac' -optimise '/Users/javierluraschi/RStudio/spark.hello/inst/scala/hello.scala'
+    ## ==> '/usr/local/scala/scala-2.11.8/bin/scalac' -optimise '/Users/javierluraschi/RStudio/spark.hello/inst/scala/hello.scala'
 
-    ## ==> '/usr/bin/jar' cf '/Users/javierluraschi/RStudio/spark.hello/inst/java/SparkHello' .
+    ## ==> '/usr/bin/jar' cf '/Users/javierluraschi/RStudio/spark.hello/inst/java/sparkhello-2.0-2.11.jar' .
 
-    ## ==> SparkHello successfully created
-
-    ## [1] TRUE
+    ## ==> sparkhello-2.0-2.11.jar successfully created
 
 Once the code is compiled as jars, you can make use of it on your own R functions using `invoke` and `invoke_static`:
 

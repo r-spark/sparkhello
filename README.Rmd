@@ -30,8 +30,10 @@ the supporting jars under `inst/java`:
 sparklyr::spark_install(version = "1.6.2")
 ```
 
+To compile scala code into Spark using sparklyr, installing Scala 2.10 and 2.11 is required. Scala can be downloaded from [http://www.scala-lang.org/download/] and extracted into, for instance, `/usr/local/scala/scala-2.10.6`.
+
 ```{r}
-sparklyr::spark_compile("SparkHello")
+sparklyr::compile_package_jars()
 ```
 
 Once the code is compiled as jars, you can make use of it on your own R
