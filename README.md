@@ -1,9 +1,9 @@
 sparkhello: Scala to Spark - Hello World
 ================
 
-This is package to demonstrate how [sparklyr](http://github.com/rstudio/sparklyr) can be used to assist in building an [sparkapi](http://github.com/rstudio/sparkapi) extension package that uses Scala code, which is compiled and deployed to Apache Spark.
+**sparkhello** demonstrates how to build a [sparklyr](http://github.com/rstudio/sparklyr) extension package that uses custom Scala code which is compiled and deployed to Apache Spark.
 
-For instance, suppose that you need to write the following Scala code that needs to deploy to Spark:
+For example, suppose that you want to deploy the following Scala code to Spark as part of your extension:
 
 ``` scala
 object HelloWorld {
@@ -13,43 +13,7 @@ object HelloWorld {
 }
 ```
 
-Packaging and deploying this Scala code can be accomplished by reusing the structure of this sample package. The Scala code is stored under `inst/scala` and compiled using the following command which will generate the supporting jars under `inst/java`:
-
-``` r
-sparklyr::spark_install(version = "1.6.2")
-```
-
-To compile scala code into Spark using sparklyr, installing Scala 2.10 and 2.11 is required. Scala can be downloaded from [Scala Download](http://www.scala-lang.org/download/) and extracted into, for instance, `/usr/local/scala/scala-2.10.6`.
-
-``` r
-sparklyr::compile_package_jars()
-```
-
-    ## ==> using scalac 2.10.6
-
-    ## ==> building against Spark 1.6.1
-
-    ## ==> building 'sparkhello-1.6-2.10.jar' ...
-
-    ## ==> '/usr/local/scala/scala-2.10.6/bin/scalac' -optimise '/Users/javierluraschi/RStudio/spark.hello/inst/scala/hello.scala'
-
-    ## ==> '/usr/bin/jar' cf '/Users/javierluraschi/RStudio/spark.hello/inst/java/sparkhello-1.6-2.10.jar' .
-
-    ## ==> sparkhello-1.6-2.10.jar successfully created
-
-    ## ==> using scalac 2.11.8
-
-    ## ==> building against Spark 2.0.0
-
-    ## ==> building 'sparkhello-2.0-2.11.jar' ...
-
-    ## ==> '/usr/local/scala/scala-2.11.8/bin/scalac' -optimise '/Users/javierluraschi/RStudio/spark.hello/inst/scala/hello.scala'
-
-    ## ==> '/usr/bin/jar' cf '/Users/javierluraschi/RStudio/spark.hello/inst/java/sparkhello-2.0-2.11.jar' .
-
-    ## ==> sparkhello-2.0-2.11.jar successfully created
-
-Once the code is compiled as jars, you can make use of it on your own R functions using `invoke` and `invoke_static`:
+The R wrapper for this Scala code might look like this:
 
 ``` r
 spark_hello <- function(sc) {
@@ -57,7 +21,43 @@ spark_hello <- function(sc) {
 }
 ```
 
-After building this package, others using `sparklyr` will be able to use your extension as well:
+To package and deploy this Scala code as part of your extension, store the Scala code within the `inst/scala` directory of your package and then compile it using the following command, which will build the JARs required for various versions of Spark under the `inst/java` directory of your package:
+
+``` r
+sparklyr::compile_package_jars()
+```
+
+There are a couple of conditions required for `sparklyr::compile_package_jars` to work correctly:
+
+1.  Your current working directory should be the root directory of your package.
+
+2.  You should [download and install](http://www.scala-lang.org/download/) the Scala 2.10 and 2.11 compilers to one of the following paths:
+    -   /opt/scala
+    -   /opt/local/scala
+    -   /usr/local/scala
+    -   ~/scala (Windows-only)
+
+You then need to implement the `spark_dependencies` function (which tells sparklyr that your JARs are required dependencies) as well as an `.onLoad` function which registers your extension. For example:
+
+``` r
+spark_dependencies <- function(spark_version, scala_version, ...) {
+  sparklyr::spark_dependency(
+    jars = c(
+      system.file(
+        sprintf("java/sparkhello-%s-%s.jar", spark_version, scala_version),
+        package = "sparkhello"
+      )
+    ),
+    packages = c()
+  )
+}
+
+.onLoad <- function(libname, pkgname) {
+  sparklyr::register_extension(pkgname)
+}
+```
+
+Assuming the **sparkhello** package was loaded prior to connecting to Spark, you can now call the `spark_hello` function which in turn executes the Scala code in your custom JAR:
 
 ``` r
 library(sparklyr)
@@ -73,4 +73,4 @@ spark_hello(sc)
 spark_disconnect(sc)
 ```
 
-You can learn more about sparklyr from [spark.rstudio.com](http://spark.rstudio.com/)
+You can learn more about sparklyr extensions at <http://spark.rstudio.com/extensions.html>.
