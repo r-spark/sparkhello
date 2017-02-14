@@ -26,7 +26,7 @@ spark_hello <- function(sc) {
 }
 ```
 
-To package and deploy this Scala code as part of your extension, store the Scala code within the   `inst/scala` directory of your package and then compile it using the following command, which will build the JARs required for various versions of Spark under the `inst/java` directory of your package:
+To package and deploy this Scala code as part of your extension, store the Scala code within the `/scala` directory of your package and then compile it using the following command, which will build the JARs required for various versions of Spark under the `inst/java` directory of your package:
 
 ```{r, eval= FALSE}
 sparklyr::compile_package_jars()
