@@ -66,18 +66,15 @@ spark_dependencies <- function(spark_version, scala_version, ...) {
 
 Assuming the **sparkhello** package was loaded prior to connecting to Spark, you can now call the `spark_hello` function which in turn executes the Scala code in your custom JAR:
 
-```{r, eval=FALSE}
+```{r message=FALSE}
 library(sparklyr)
 library(sparkhello)
 
 sc <- spark_connect(master = "local")
 spark_hello(sc)
 ```
-```
-## [1] "Hello, world! - From Scala"
-```
 
-```{r, eval=FALSE}
+```{r}
 spark_disconnect(sc)
 ```
 
